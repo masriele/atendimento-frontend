@@ -1,0 +1,44 @@
+mat-toolbar {
+  position: fixed;
+  top: 0;
+  z-index: 2;
+  background-color: var(--primary-color);
+}
+
+mat-sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav {
+  padding-top: 3.5rem;
+}
+
+mat-sidenav-content {
+  padding-top: 3.5rem;
+}
+
+.entry {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+}
+
+.expanded {
+  width: 250px;
+}
+
+.title {
+  color: white;
+  font-size: larger;
+  margin-left: 20px;
+}
+
+mat-nav-list mat-icon {
+  color: var(--primary-color);
+}
+
+mat-nav-list span {
+  color: var(--primary-color);
+  font-size: large;
+}
