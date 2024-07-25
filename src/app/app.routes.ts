@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AgendamentoFormComponent } from './modulos/agendamento/agendamento-form/agendamento-form.component';
+import { AgendamentoFormComponent } from './pages/agendamento/agendamento-form/agendamento-form.component';
 
 export const routes: Routes = [
   {
@@ -9,7 +9,7 @@ export const routes: Routes = [
         path: '',
         loadComponent: () =>
           import(
-            './modulos/agendamento/agendamento-list/agendamento-list.component'
+            './pages/agendamento/agendamento-list/agendamento-list.component'
           ).then((m) => m.AgendamentoListComponent),
       },
       { path: 'new', component: AgendamentoFormComponent },

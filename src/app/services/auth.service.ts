@@ -7,21 +7,21 @@ import { Observable, tap } from 'rxjs';
 })
 export class AuthService {
   private API_URL = 'http://localhost:5210/Auth/login';
-  private token = '';
+  private tokenKey = 'authToken';
 
   constructor(private httpClient: HttpClient) {}
 
   login(email: string, senha: string): Observable<any> {
     return this.httpClient
       .post<any>(this.API_URL, { email, senha })
-      .pipe(tap((t) => (this.token = t.token)));
+      .pipe(tap((response) => this.setToken(response.token)));
   }
 
-  getAuthorizationToken() {
-    return this.token;
+  private setToken(token: string): void {
+    if (window.localStorage) localStorage.setItem(this.tokenKey, token);
   }
 
   logout(): void {
-    this.token = '';
+    if (window.localStorage) localStorage.removeItem(this.tokenKey);
   }
 }
