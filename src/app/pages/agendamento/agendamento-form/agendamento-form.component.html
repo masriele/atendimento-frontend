@@ -1,1 +1,54 @@
-<p>agendamento-form works!</p>
+<mat-card appearance="outlined" class="card">
+  <mat-card-header>
+    <mat-card-title>{{ title }}</mat-card-title>
+  </mat-card-header>
+  <mat-divider class="divider"></mat-divider>
+  <mat-card-content>
+    @if (!loading) {
+    <form [formGroup]="form" fxLayout="column" fxLayoutGap="16px">
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+        <mat-form-field fxFlex>
+          <mat-label>Paciente</mat-label>
+          <mat-select formControlName="pacienteId">
+            @for (paciente of pacientes; track paciente){
+            <mat-option [value]="paciente.id">{{ paciente.nome }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex>
+          <mat-label>Atendente</mat-label>
+          <mat-select formControlName="atendenteId">
+            @for (atendente of atendentes; track atendente){
+            <mat-option [value]="atendente.id">{{ atendente.nome }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex>
+          <mat-label>Data e Serviço</mat-label>
+          <mat-select formControlName="dataServicoId">
+            @for (dataServico of dataServicos; track dataServico){
+            <mat-option [value]="dataServico.id">
+              {{ dataServico.servico.nome }}, {{ dataServico.dataSemana.dia }} -
+              {{ dataServico.dataSemana.horario }}h
+            </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <br />
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px">
+        <button mat-raised-button class="cancelButton" (click)="onCancel()">
+          Cancelar
+        </button>
+        <button mat-flat-button class="saveButton" (click)="onSubmit()">
+          {{ buttonTitle }}
+        </button>
+      </div>
+    </form>
+    }@else {
+    <p>Carregando...</p>
+    }
+  </mat-card-content>
+</mat-card>

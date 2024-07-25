@@ -21,4 +21,23 @@ export class AgendamentoService {
       .set('PageSize', pageSize);
     return this.httpClient.get<any>(this.API_URL + '/pagination', { params });
   }
+
+  getById(id: number): Observable<Agendamento> {
+    return this.httpClient.get<Agendamento>(this.API_URL + '/' + id);
+  }
+
+  create(agendamento: Agendamento) {
+    return this.httpClient.post<Agendamento>(this.API_URL, agendamento);
+  }
+
+  delete(id: number) {
+    return this.httpClient.delete(this.API_URL + '/' + id);
+  }
+
+  update(id: number, agendamento: Agendamento): Observable<Agendamento> {
+    return this.httpClient.put<Agendamento>(
+      this.API_URL + '/' + id,
+      agendamento
+    );
+  }
 }

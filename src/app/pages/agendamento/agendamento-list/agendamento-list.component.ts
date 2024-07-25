@@ -53,7 +53,7 @@ export class AgendamentoListComponent {
     private service: AgendamentoService,
     private auth: AuthService
   ) {
-    auth.login('jose@gmail.com', '1234').subscribe();
+    auth.login('jose@gmail', '123').subscribe();
     this.getDataPaginated({
       pageIndex: this.pageIndex,
       pageSize: this.pageSize,

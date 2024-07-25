@@ -4,7 +4,7 @@ import { Paciente } from './paciente';
 
 export interface Agendamento {
   id: number;
-  pacientId: number;
+  pacienteId: number;
   paciente: Paciente;
   atendenteId: number;
   atendente: Atendente;

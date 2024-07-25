@@ -1,10 +1,10 @@
-@if (agendamentos$) {
 <mat-card appearance="outlined" class="card">
   <mat-card-header>
     <mat-card-title>Agendamentos</mat-card-title>
   </mat-card-header>
   <mat-divider class="divider"></mat-divider>
   <mat-card-content>
+    @if (agendamentos$) {
     <div>
       <button mat-fab extended class="newButton" (click)="onAdd()">
         <mat-icon>add</mat-icon>
@@ -75,9 +75,8 @@
       [pageSizeOptions]="[5, 10, 25, 100]"
       (page)="getDataPaginated($event)"
     ></mat-paginator>
+    }@else {
+    <p>Carregando...</p>
+    }
   </mat-card-content>
 </mat-card>
-
-}@else {
-<p>Carregando...</p>
-}
