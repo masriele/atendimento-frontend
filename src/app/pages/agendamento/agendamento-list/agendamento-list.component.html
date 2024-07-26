@@ -31,6 +31,12 @@
           {{ item.dataServico.servico.nome }}
         </td>
       </ng-container>
+      <ng-container matColumnDef="data">
+        <th mat-header-cell *matHeaderCellDef>Data</th>
+        <td mat-cell *matCellDef="let item">
+          {{ item.data | date : "dd/MM/yyyy" }}
+        </td>
+      </ng-container>
       <ng-container matColumnDef="dia">
         <th mat-header-cell *matHeaderCellDef>Dia</th>
         <td mat-cell *matCellDef="let item">
@@ -69,7 +75,7 @@
     </table>
     <mat-paginator
       class="paginator"
-      [length]="pageSize + 1"
+      [length]="agendamentos$.length"
       [pageIndex]="pageIndex"
       [pageSize]="pageSize"
       [pageSizeOptions]="[5, 10, 25, 100]"

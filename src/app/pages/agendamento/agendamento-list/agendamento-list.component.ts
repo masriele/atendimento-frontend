@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -26,7 +26,9 @@ import { Agendamento } from '../../../models/agendamento';
     MatCardModule,
     MatDividerModule,
     MatPaginatorModule,
+    DatePipe,
   ],
+  providers: [DatePipe],
   templateUrl: './agendamento-list.component.html',
   styleUrl: './agendamento-list.component.css',
 })
@@ -37,6 +39,7 @@ export class AgendamentoListComponent {
     'paciente',
     'atendente',
     'servico',
+    'data',
     'dia',
     'horario',
     'acao',
@@ -46,14 +49,15 @@ export class AgendamentoListComponent {
   pageSize = 10;
 
   constructor(
-    public _snackBar: MatSnackBar,
+    public snackBar: MatSnackBar,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
     private service: AgendamentoService,
-    private auth: AuthService
+    private auth: AuthService,
+    private datePipe: DatePipe
   ) {
-    auth.login('jose@gmail', '123').subscribe();
+    auth.login('jose@gmail.com', '1234').subscribe();
     this.getDataPaginated({
       pageIndex: this.pageIndex,
       pageSize: this.pageSize,
@@ -69,12 +73,6 @@ export class AgendamentoListComponent {
     return event;
   }
 
-  onError(errorMessage: string, action: string) {
-    this._snackBar.open(errorMessage, action, {
-      duration: 3000,
-    });
-  }
-
   onAdd() {
     this.router.navigate(['new'], { relativeTo: this.activatedRoute });
   }
@@ -84,12 +82,29 @@ export class AgendamentoListComponent {
       relativeTo: this.activatedRoute,
     });
   }
-  onDelete(id: number) {}
+  onDelete(id: number) {
+    this.service.delete(id).subscribe({
+      complete: () =>
+        this.showMessage('Agendamento deletado com sucesso!', '', () =>
+          window.location.reload()
+        ),
+    });
+  }
+
+  showMessage(message: string, action?: string, callback?: () => void) {
+    const snackBarRef = this.snackBar.open(message, action, {
+      duration: 750,
+    });
+    snackBarRef.afterDismissed().subscribe(() => {
+      if (callback) callback();
+    });
+  }
 
   openDialog(id: number) {
     this.dialog.open(Dialog, {
       data: {
-        delete: this.onDelete(id),
+        agendId: id,
+        delete: (agendId: number) => this.onDelete(agendId),
       },
     });
   }

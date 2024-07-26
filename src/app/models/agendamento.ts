@@ -10,4 +10,5 @@ export interface Agendamento {
   atendente: Atendente;
   dataServicoId: number;
   dataServico: DataServico;
+  data: Date;
 }

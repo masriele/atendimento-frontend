@@ -26,15 +26,37 @@
         </mat-form-field>
 
         <mat-form-field fxFlex>
-          <mat-label>Data e Serviço</mat-label>
+          <mat-label>Serviço</mat-label>
+          <mat-select
+            formControlName="servico"
+            (selectionChange)="onServiceChange($event.value)"
+          >
+            @for (servico of servicos; track servico){
+            <mat-option [value]="servico.id">
+              {{ servico.nome }}
+            </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <mat-label>Dia e Hora</mat-label>
           <mat-select formControlName="dataServicoId">
             @for (dataServico of dataServicos; track dataServico){
             <mat-option [value]="dataServico.id">
-              {{ dataServico.servico.nome }}, {{ dataServico.dataSemana.dia }} -
+              {{ dataServico.dataSemana.dia }} -
               {{ dataServico.dataSemana.horario }}h
             </mat-option>
             }
           </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <mat-label>Data</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="data" />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
       <br />
