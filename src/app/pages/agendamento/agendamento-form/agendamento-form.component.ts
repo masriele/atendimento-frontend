@@ -144,7 +144,7 @@ export class AgendamentoFormComponent {
   }
 
   onSubmit() {
-    if (this.form.valid)
+    if (this.form.valid) {
       if (this.actionType === 'new') {
         this.service.create(this.form.value).subscribe({
           next: (v) =>
@@ -166,6 +166,9 @@ export class AgendamentoFormComponent {
           },
         });
       }
+    } else {
+      this.showMessage('Preencha todos os campos corretamente.');
+    }
   }
 
   showMessage(message: string, action?: string, callback?: () => void) {

@@ -34,6 +34,10 @@ mat-sidenav-content {
   margin-left: 20px;
 }
 
+.spacer {
+  flex: 1 1 auto;
+}
+
 mat-nav-list mat-icon {
   color: var(--primary-color);
 }

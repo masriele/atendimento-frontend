@@ -1,9 +1,19 @@
 <mat-toolbar>
+  @if(!isUserRoute){
   <button mat-icon-button aria-label="Menu icon" (click)="toggleMenu()">
     <mat-icon style="color: white">menu</mat-icon>
   </button>
+  }
   <h1 class="title">Atendimentos</h1>
+  <span class="spacer"></span>
+  @if(!isUserRoute){
+  <span style="color: white">{{ userName }}</span>
+  <button mat-icon-button (click)="onLogout()">
+    <mat-icon style="color: white">logout</mat-icon>
+  </button>
+  }
 </mat-toolbar>
+@if(!isUserRoute){
 <mat-sidenav-container autosize>
   <mat-sidenav>
     <mat-nav-list>
@@ -43,3 +53,6 @@
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+}@else{
+<router-outlet></router-outlet>
+}

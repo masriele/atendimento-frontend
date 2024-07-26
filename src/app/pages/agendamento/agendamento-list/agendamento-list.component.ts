@@ -6,7 +6,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
-import { AuthService } from '../../../services/auth.service';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -54,10 +53,8 @@ export class AgendamentoListComponent {
     private activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
     private service: AgendamentoService,
-    private auth: AuthService,
     private datePipe: DatePipe
   ) {
-    auth.login('jose@gmail.com', '1234').subscribe();
     this.getDataPaginated({
       pageIndex: this.pageIndex,
       pageSize: this.pageSize,
