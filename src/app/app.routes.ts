@@ -3,6 +3,7 @@ import { AgendamentoFormComponent } from './pages/agendamento/agendamento-form/a
 import { UsuarioEntrarComponent } from './pages/usuario/usuario-entrar/usuario-entrar.component';
 import { UsuarioCriarComponent } from './pages/usuario/usuario-criar/usuario-criar.component';
 import { AuthGuard } from './services/auth-guard';
+import { AtendenteFormComponent } from './pages/atendente/atendente-form/atendente-form.component';
 
 export const routes: Routes = [
   {
@@ -18,6 +19,21 @@ export const routes: Routes = [
       },
       { path: 'new', component: AgendamentoFormComponent },
       { path: ':id/edit', component: AgendamentoFormComponent },
+    ],
+  },
+  {
+    path: 'atendentes',
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import(
+            './pages/atendente/atendente-list/atendente-list.component'
+          ).then((m) => m.AtendenteListComponent),
+      },
+      { path: 'new', component: AtendenteFormComponent },
+      { path: ':id/edit', component: AtendenteFormComponent },
     ],
   },
   {
