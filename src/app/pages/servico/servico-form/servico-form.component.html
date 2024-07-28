@@ -1,1 +1,30 @@
-<p>servico-form works!</p>
+<mat-card appearance="outlined" class="card">
+    <mat-card-header>
+      <mat-card-title>{{ title }}</mat-card-title>
+    </mat-card-header>
+    <mat-divider class="divider"></mat-divider>
+    <mat-card-content>
+      @if (!loading) {
+      <form [formGroup]="form" fxLayout="column" fxLayoutGap="16px">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+          <mat-form-field fxFlex>
+            <mat-label>Nome</mat-label>
+            <input matInput formControlName="nome" />
+          </mat-form-field>      
+        </div>
+        <br />
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px">
+          <button mat-raised-button class="cancelButton" (click)="onCancel()">
+            Cancelar
+          </button>
+          <button mat-flat-button class="saveButton" (click)="onSubmit()">
+            {{ buttonTitle }}
+          </button>
+        </div>
+      </form>
+      }@else {
+      <p>Carregando...</p>
+      }
+    </mat-card-content>
+  </mat-card>
+  

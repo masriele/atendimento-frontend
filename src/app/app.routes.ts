@@ -4,6 +4,8 @@ import { UsuarioEntrarComponent } from './pages/usuario/usuario-entrar/usuario-e
 import { UsuarioCriarComponent } from './pages/usuario/usuario-criar/usuario-criar.component';
 import { AuthGuard } from './services/auth-guard';
 import { AtendenteFormComponent } from './pages/atendente/atendente-form/atendente-form.component';
+import { PacienteFormComponent } from './pages/paciente/paciente-form/paciente-form.component';
+import { ServicoFormComponent } from './pages/servico/servico-form/servico-form.component';
 
 export const routes: Routes = [
   {
@@ -22,6 +24,21 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'pacientes',
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import(
+            './pages/paciente/paciente-list/paciente-list.component'
+          ).then((m) => m.PacienteListComponent),
+      },
+      { path: 'new', component: PacienteFormComponent },
+      { path: ':id/edit', component: PacienteFormComponent },
+    ],
+  },
+  {
     path: 'atendentes',
     canActivate: [AuthGuard],
     children: [
@@ -34,6 +51,21 @@ export const routes: Routes = [
       },
       { path: 'new', component: AtendenteFormComponent },
       { path: ':id/edit', component: AtendenteFormComponent },
+    ],
+  },
+  {
+    path: 'servicos',
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import(
+            './pages/servico/servico-list/servico-list.component'
+          ).then((m) => m.ServicoListComponent),
+      },
+      { path: 'new', component: ServicoFormComponent },
+      { path: ':id/edit', component: ServicoFormComponent },
     ],
   },
   {
