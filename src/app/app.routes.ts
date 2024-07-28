@@ -6,6 +6,7 @@ import { AuthGuard } from './services/auth-guard';
 import { AtendenteFormComponent } from './pages/atendente/atendente-form/atendente-form.component';
 import { PacienteFormComponent } from './pages/paciente/paciente-form/paciente-form.component';
 import { ServicoFormComponent } from './pages/servico/servico-form/servico-form.component';
+import { DataSemanaFormComponent } from './pages/servico/data-semana-form/data-semana-form.component';
 
 export const routes: Routes = [
   {
@@ -66,6 +67,7 @@ export const routes: Routes = [
       },
       { path: 'new', component: ServicoFormComponent },
       { path: ':id/edit', component: ServicoFormComponent },
+      { path: 'newData', component: DataSemanaFormComponent },
     ],
   },
   {

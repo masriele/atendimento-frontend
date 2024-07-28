@@ -12,6 +12,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Dialog } from '../../../components/dialog/dialog.component';
 import { Servico } from '../../../models/servico';
 import { ServicoService } from '../../../services/servico.service';
+import { DataServicoService } from '../../../services/data-servico.service';
+import { DataServico } from '../../../models/dataServico';
 
 @Component({
   selector: 'app-servico-list',
@@ -33,7 +35,7 @@ import { ServicoService } from '../../../services/servico.service';
 })
 export class ServicoListComponent {
   servicos$: any;
-  servicos_array: Servico[] = [];
+  servicos_array: DataServico[] = [];
   displayedColumns = [
     'nome',
     'dia',
@@ -50,6 +52,7 @@ export class ServicoListComponent {
     private activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
     private service: ServicoService,
+    private serviceDataServico: DataServicoService,
     private datePipe: DatePipe
   ) {
     this.getDataPaginated({
@@ -59,7 +62,7 @@ export class ServicoListComponent {
   }
 
   public getDataPaginated(event: PageEvent) {
-    this.service
+    this.serviceDataServico
       .getAllPaginated(event.pageIndex + 1, event.pageSize)
       .subscribe((response) => {
         this.servicos$ = response;
@@ -67,17 +70,22 @@ export class ServicoListComponent {
     return event;
   }
 
-  onAdd() {
+  onAddServico() {
     this.router.navigate(['new'], { relativeTo: this.activatedRoute });
   }
 
-  onEdit(id: number) {
-    this.router.navigate([id.toString() + '/edit'], {
-      relativeTo: this.activatedRoute,
-    });
+  onAddDiaHorario() {
+    this.router.navigate(['newData'], { relativeTo: this.activatedRoute });
   }
+
+  // onEdit(id: number) {
+  //   this.router.navigate([id.toString() + '/edit'], {
+  //     relativeTo: this.activatedRoute,
+  //   });
+  // }
+
   onDelete(id: number) {
-    this.service.delete(id).subscribe({
+    this.serviceDataServico.delete(id).subscribe({
       complete: () =>
         this.showMessage('Serviço deletado com sucesso!', '', () =>
           window.location.reload()

@@ -25,10 +25,10 @@
       </a>
     </mat-nav-list>
     <mat-nav-list>
-      <a mat-list-item (click)="navigateTo('/servicos')">
+      <a mat-list-item (click)="navigateTo('/atendentes')">
         <span class="entry">
-          <mat-icon>medical_services</mat-icon>
-          <span>Serviços</span>
+          <mat-icon>medical_information</mat-icon>
+          <span>Atendentes</span>
         </span>
       </a>
     </mat-nav-list>
@@ -41,13 +41,13 @@
       </a>
     </mat-nav-list>
     <mat-nav-list>
-      <a mat-list-item (click)="navigateTo('/atendentes')">
+      <a mat-list-item (click)="navigateTo('/servicos')">
         <span class="entry">
-          <mat-icon>medical_information</mat-icon>
-          <span>Atendentes</span>
+          <mat-icon>medical_services</mat-icon>
+          <span>Serviços</span>
         </span>
       </a>
-    </mat-nav-list>
+    </mat-nav-list>    
   </mat-sidenav>
   <mat-sidenav-content>
     <router-outlet></router-outlet>
