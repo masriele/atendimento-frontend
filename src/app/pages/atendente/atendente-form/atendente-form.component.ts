@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -10,6 +15,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-atendente-form',
@@ -22,6 +28,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatDividerModule,
     FlexLayoutModule,
     ReactiveFormsModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './atendente-form.component.html',
   styleUrl: './atendente-form.component.css',
@@ -44,12 +51,13 @@ export class AtendenteFormComponent implements OnInit {
   ) {
     this.form = this.formBuilder.group({
       nome: ['', Validators.required],
-      telefone: ['', Validators.required],
+      telefone: ['', [Validators.required, Validators.pattern(/^\d{9,11}$/)]],
     });
 
     this.actionType = this.router.url.includes('new') ? 'new' : 'edit';
     this.buttonTitle = this.actionType === 'new' ? 'Cadastrar' : 'Editar';
-    this.title = this.actionType === 'new' ? 'Cadastrar Atendente' : 'Editar Atendente';
+    this.title =
+      this.actionType === 'new' ? 'Cadastrar Atendente' : 'Editar Atendente';
   }
 
   ngOnInit(): void {
@@ -72,12 +80,18 @@ export class AtendenteFormComponent implements OnInit {
     if (this.form.valid) {
       if (this.actionType === 'new') {
         this.atendenteService.create(this.form.value).subscribe({
-          next: () => this.showMessage('Atendente salvo com sucesso!', '', () => this.location.back()),
+          next: () =>
+            this.showMessage('Atendente salvo com sucesso!', '', () =>
+              this.location.back()
+            ),
           error: (e) => this.showMessage(e.error.message ?? e.error),
         });
       } else {
         this.atendenteService.update(this.id, this.form.value).subscribe({
-          next: () => this.showMessage('Atendente salvo com sucesso!', '', () => this.location.back()),
+          next: () =>
+            this.showMessage('Atendente salvo com sucesso!', '', () =>
+              this.location.back()
+            ),
           error: (e) => this.showMessage(e.error.message ?? e.error),
         });
       }

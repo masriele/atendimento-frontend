@@ -13,6 +13,7 @@ import { Dialog } from '../../../components/dialog/dialog.component';
 import { Paciente } from '../../../models/paciente';
 import { PacienteService } from '../../../services/paciente.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-paciente-list',
@@ -28,6 +29,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatPaginatorModule,
     DatePipe,
     MatTooltipModule,
+    MatProgressSpinnerModule,
   ],
   providers: [DatePipe],
   templateUrl: './paciente-list.component.html',

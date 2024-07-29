@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -44,12 +49,13 @@ export class PacienteFormComponent implements OnInit {
   ) {
     this.form = this.formBuilder.group({
       nome: ['', Validators.required],
-      telefone: ['', Validators.required],
+      telefone: ['', [Validators.required, Validators.pattern(/^\d{9,11}$/)]],
     });
 
     this.actionType = this.router.url.includes('new') ? 'new' : 'edit';
     this.buttonTitle = this.actionType === 'new' ? 'Cadastrar' : 'Editar';
-    this.title = this.actionType === 'new' ? 'Cadastrar Paciente' : 'Editar Paciente';
+    this.title =
+      this.actionType === 'new' ? 'Cadastrar Paciente' : 'Editar Paciente';
   }
 
   ngOnInit(): void {
@@ -72,12 +78,18 @@ export class PacienteFormComponent implements OnInit {
     if (this.form.valid) {
       if (this.actionType === 'new') {
         this.pacienteService.create(this.form.value).subscribe({
-          next: () => this.showMessage('Paciente salvo com sucesso!', '', () => this.location.back()),
+          next: () =>
+            this.showMessage('Paciente salvo com sucesso!', '', () =>
+              this.location.back()
+            ),
           error: (e) => this.showMessage(e.error.message ?? e.error),
         });
       } else {
         this.pacienteService.update(this.id, this.form.value).subscribe({
-          next: () => this.showMessage('Paciente salvo com sucesso!', '', () => this.location.back()),
+          next: () =>
+            this.showMessage('Paciente salvo com sucesso!', '', () =>
+              this.location.back()
+            ),
           error: (e) => this.showMessage(e.error.message ?? e.error),
         });
       }

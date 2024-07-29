@@ -13,6 +13,7 @@ import { Dialog } from '../../../components/dialog/dialog.component';
 import { AtendenteService } from '../../../services/atendente.service';
 import { Atendente } from '../../../models/atendente';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-atendente-list',
@@ -28,6 +29,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatPaginatorModule,
     DatePipe,
     MatTooltipModule,
+    MatProgressSpinnerModule,
   ],
   providers: [DatePipe],
   templateUrl: './atendente-list.component.html',

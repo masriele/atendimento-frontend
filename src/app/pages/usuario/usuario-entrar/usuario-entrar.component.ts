@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 @Component({
@@ -26,12 +27,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatButtonModule,
     MatInputModule,
     FlexLayoutModule,
+    MatIconModule,
   ],
   templateUrl: './usuario-entrar.component.html',
   styleUrl: './usuario-entrar.component.css',
 })
 export class UsuarioEntrarComponent {
   form: FormGroup;
+  hidePassword = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -76,5 +79,9 @@ export class UsuarioEntrarComponent {
     snackBarRef.afterDismissed().subscribe(() => {
       if (callback) callback();
     });
+  }
+
+  togglePasswordVisibility() {
+    this.hidePassword = !this.hidePassword;
   }
 }

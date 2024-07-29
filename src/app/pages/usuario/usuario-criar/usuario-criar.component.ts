@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { UsuarioService } from '../../../services/usuario.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-usuario-criar',
@@ -26,12 +27,14 @@ import { UsuarioService } from '../../../services/usuario.service';
     MatButtonModule,
     MatInputModule,
     FlexLayoutModule,
+    MatIconModule,
   ],
   templateUrl: './usuario-criar.component.html',
   styleUrl: './usuario-criar.component.css',
 })
 export class UsuarioCriarComponent {
   form: FormGroup;
+  hidePassword = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -74,5 +77,9 @@ export class UsuarioCriarComponent {
     snackBarRef.afterDismissed().subscribe(() => {
       if (callback) callback();
     });
+  }
+
+  togglePasswordVisibility() {
+    this.hidePassword = !this.hidePassword;
   }
 }

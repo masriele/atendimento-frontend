@@ -14,6 +14,7 @@ import { Dialog } from '../../../components/dialog/dialog.component';
 import { ServicoService } from '../../../services/servico.service';
 import { Servico } from '../../../models/servico';
 import { Info } from '../../../components/info/info.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-servico-list',
@@ -29,6 +30,7 @@ import { Info } from '../../../components/info/info.component';
     MatPaginatorModule,
     DatePipe,
     MatTooltipModule,
+    MatProgressSpinnerModule,
   ],
   providers: [DatePipe],
   templateUrl: './servico-list.component.html',
