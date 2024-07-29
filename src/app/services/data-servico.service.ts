@@ -22,6 +22,12 @@ export class DataServicoService {
     return this.httpClient.get<any>(this.API_URL + '/pagination', { params });
   }
 
+  getFilter(id: number): Observable<any> {
+    return this.httpClient.get<any>(
+      this.API_URL + '/filter/' + id + '/pagination'
+    );
+  }
+
   getById(id: number): Observable<DataServico> {
     return this.httpClient.get<DataServico>(this.API_URL + '/' + id);
   }

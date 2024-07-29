@@ -58,6 +58,7 @@
             mat-icon-button
             color="primary"
             aria-label="Editar"
+            matTooltip="Editar"
             (click)="onEdit(item.id)"
           >
             <mat-icon>edit</mat-icon>
@@ -66,6 +67,7 @@
             mat-icon-button
             color="warn"
             aria-label="Remover"
+            matTooltip="Remover"
             (click)="openDialog(item.id)"
           >
             <mat-icon>delete</mat-icon>
@@ -75,7 +77,7 @@
     </table>
     <mat-paginator
       class="paginator"
-      [length]="agendamentos$.length"
+      [length]="agendamentos_array.length"
       [pageIndex]="pageIndex"
       [pageSize]="pageSize"
       [pageSizeOptions]="[5, 10, 25, 100]"

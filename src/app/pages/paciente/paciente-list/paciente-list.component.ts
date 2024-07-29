@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Dialog } from '../../../components/dialog/dialog.component';
 import { Paciente } from '../../../models/paciente';
 import { PacienteService } from '../../../services/paciente.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-paciente-list',
@@ -26,6 +27,7 @@ import { PacienteService } from '../../../services/paciente.service';
     MatDividerModule,
     MatPaginatorModule,
     DatePipe,
+    MatTooltipModule,
   ],
   providers: [DatePipe],
   templateUrl: './paciente-list.component.html',
@@ -34,11 +36,7 @@ import { PacienteService } from '../../../services/paciente.service';
 export class PacienteListComponent {
   pacientes$: any;
   pacientes_array: Paciente[] = [];
-  displayedColumns = [
-    'nome',
-    'telefone',
-    'acao',
-  ];
+  displayedColumns = ['nome', 'telefone', 'acao'];
 
   pageIndex = 0;
   pageSize = 10;
@@ -55,6 +53,9 @@ export class PacienteListComponent {
       pageIndex: this.pageIndex,
       pageSize: this.pageSize,
     } as PageEvent);
+    this.service
+      .getAll()
+      .subscribe((response) => (this.pacientes_array = response));
   }
 
   public getDataPaginated(event: PageEvent) {
@@ -96,8 +97,8 @@ export class PacienteListComponent {
   openDialog(id: number) {
     this.dialog.open(Dialog, {
       data: {
-        agendId: id,
-        delete: (agendId: number) => this.onDelete(agendId),
+        id: id,
+        delete: (id: number) => this.onDelete(id),
       },
     });
   }

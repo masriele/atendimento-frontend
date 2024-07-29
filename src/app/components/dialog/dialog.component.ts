@@ -23,10 +23,10 @@ import { MatButton } from '@angular/material/button';
 export class Dialog {
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: { agendId: number; delete: (agendId: number) => void }
+    public data: { id: number; delete: (id: number) => void }
   ) {}
 
   onDelete() {
-    this.data.delete(this.data.agendId);
+    this.data.delete(this.data.id);
   }
 }

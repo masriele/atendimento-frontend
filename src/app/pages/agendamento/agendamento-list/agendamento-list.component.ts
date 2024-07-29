@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Dialog } from '../../../components/dialog/dialog.component';
 import { AgendamentoService } from '../../../services/agendamento.service';
 import { Agendamento } from '../../../models/agendamento';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-agendamento-list',
@@ -26,6 +27,7 @@ import { Agendamento } from '../../../models/agendamento';
     MatDividerModule,
     MatPaginatorModule,
     DatePipe,
+    MatTooltipModule,
   ],
   providers: [DatePipe],
   templateUrl: './agendamento-list.component.html',
@@ -59,6 +61,9 @@ export class AgendamentoListComponent {
       pageIndex: this.pageIndex,
       pageSize: this.pageSize,
     } as PageEvent);
+    this.service
+      .getAll()
+      .subscribe((response) => (this.agendamentos_array = response));
   }
 
   public getDataPaginated(event: PageEvent) {
@@ -100,8 +105,8 @@ export class AgendamentoListComponent {
   openDialog(id: number) {
     this.dialog.open(Dialog, {
       data: {
-        agendId: id,
-        delete: (agendId: number) => this.onDelete(agendId),
+        id: id,
+        delete: (id: number) => this.onDelete(id),
       },
     });
   }

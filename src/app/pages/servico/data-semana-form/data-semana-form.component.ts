@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -9,12 +14,13 @@ import { Servico } from '../../../models/servico';
 import { DataSemana } from '../../../models/dataSemana';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatSelectModule } from '@angular/material/select';
-import { NgIf, NgFor } from '@angular/common';
+import { DataServicoService } from '../../../services/data-servico.service';
 
 @Component({
   selector: 'app-data-semana-form',
@@ -28,18 +34,14 @@ import { NgIf, NgFor } from '@angular/common';
     MatDividerModule,
     FlexLayoutModule,
     MatSelectModule,
-    NgIf,
-    NgFor
+    MatTableModule,
   ],
   templateUrl: './data-semana-form.component.html',
   styleUrls: ['./data-semana-form.component.css'],
 })
 export class DataSemanaFormComponent implements OnInit {
   form: FormGroup;
-  actionType: string;
   id: number = 0;
-  title: string;
-  buttonTitle: string;
   servicos: Servico[] = [];
   loading = true;
 
@@ -50,36 +52,28 @@ export class DataSemanaFormComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private servicoService: ServicoService,
-    private dataSemanaService: DataSemanaService
+    private dataSemanaService: DataSemanaService,
+    private dataServicoService: DataServicoService
   ) {
     this.form = this.formBuilder.group({
       servicoId: ['', Validators.required],
       dia: ['', Validators.required],
       horario: ['', Validators.required],
     });
-
-    this.actionType = this.router.url.includes('newData') ? 'new' : 'edit';
-    this.buttonTitle = this.actionType === 'new' ? 'Cadastrar' : 'Editar';
-    this.title = this.actionType === 'new' ? 'Cadastrar Dia e Horário' : 'Editar Dia e Horário';
   }
 
   ngOnInit(): void {
     this.loadServicos();
-    
-    if (this.actionType === 'edit') {
-      const param_id = this.activatedRoute.snapshot.paramMap.get('id');
-      this.id = param_id != null ? parseInt(param_id) : 0;
-      this.dataSemanaService.getById(this.id).subscribe((response) => {
-        this.form.patchValue({
-          servicoId: response.dataServicos[0].servicoId,
-          dia: response.dia,
-          horario: response.horario,
-        });
-        this.loading = false;
+    const param_id = this.activatedRoute.snapshot.paramMap.get('id');
+    this.id = param_id != null ? parseInt(param_id) : 0;
+    this.dataServicoService.getFilter(this.id).subscribe((response) => {
+      this.form.patchValue({
+        servicoId: response[0].servico.id,
+        dia: '',
+        horario: '',
       });
-    } else {
       this.loading = false;
-    }
+    });
   }
 
   loadServicos() {
@@ -92,25 +86,20 @@ export class DataSemanaFormComponent implements OnInit {
     if (this.form.valid) {
       const formValue = this.form.value;
       const servicoId = formValue.servicoId;
-  
+
       const dataSemana: DataSemana = {
         dia: formValue.dia,
         horario: formValue.horario,
         id: 0,
-        dataServicos: []
+        dataServicos: [],
       };
-  
-      if (this.actionType === 'new') {
-        this.dataSemanaService.create(dataSemana, servicoId).subscribe({
-          next: () => this.showMessage('Dia e horário salvos com sucesso!', '', () => this.location.back()),
-          error: (e) => this.showMessage(e.error.message ?? e.error),
-        });
-      } else {
-        this.dataSemanaService.update(this.id, dataSemana).subscribe({
-          next: () => this.showMessage('Dia e horário salvos com sucesso!', '', () => this.location.back()),
-          error: (e) => this.showMessage(e.error.message ?? e.error),
-        });
-      }
+      this.dataSemanaService.create(dataSemana, servicoId).subscribe({
+        next: () =>
+          this.showMessage('Dia e horário salvos com sucesso!', '', () =>
+            this.location.back()
+          ),
+        error: (e) => this.showMessage(e.error.message ?? e.error),
+      });
     } else {
       this.showMessage('Preencha todos os campos corretamente.');
     }

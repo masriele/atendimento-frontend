@@ -31,9 +31,9 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () =>
-          import(
-            './pages/paciente/paciente-list/paciente-list.component'
-          ).then((m) => m.PacienteListComponent),
+          import('./pages/paciente/paciente-list/paciente-list.component').then(
+            (m) => m.PacienteListComponent
+          ),
       },
       { path: 'new', component: PacienteFormComponent },
       { path: ':id/edit', component: PacienteFormComponent },
@@ -61,13 +61,13 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () =>
-          import(
-            './pages/servico/servico-list/servico-list.component'
-          ).then((m) => m.ServicoListComponent),
+          import('./pages/servico/servico-list/servico-list.component').then(
+            (m) => m.ServicoListComponent
+          ),
       },
       { path: 'new', component: ServicoFormComponent },
       { path: ':id/edit', component: ServicoFormComponent },
-      { path: 'newData', component: DataSemanaFormComponent },
+      { path: ':id/newDate', component: DataSemanaFormComponent },
     ],
   },
   {
