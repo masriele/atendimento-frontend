@@ -20,7 +20,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatSelectModule } from '@angular/material/select';
-import { DataServicoService } from '../../../services/data-servico.service';
 
 @Component({
   selector: 'app-data-semana-form',
@@ -53,7 +52,6 @@ export class DataSemanaFormComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private servicoService: ServicoService,
     private dataSemanaService: DataSemanaService,
-    private dataServicoService: DataServicoService
   ) {
     this.form = this.formBuilder.group({
       servicoId: ['', Validators.required],
@@ -66,9 +64,9 @@ export class DataSemanaFormComponent implements OnInit {
     this.loadServicos();
     const param_id = this.activatedRoute.snapshot.paramMap.get('id');
     this.id = param_id != null ? parseInt(param_id) : 0;
-    this.dataServicoService.getFilter(this.id).subscribe((response) => {
+    this.servicoService.getById(this.id).subscribe((response) => {
       this.form.patchValue({
-        servicoId: response[0].servico.id,
+        servicoId: response.id,
         dia: '',
         horario: '',
       });
